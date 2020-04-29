@@ -1,4 +1,4 @@
-# Prose/Object
+# prose_object
 
 Copyright (c) 2019 Seán D. Murray
 SEE MIT LICENSE FILE

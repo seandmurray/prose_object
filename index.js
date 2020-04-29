@@ -2,6 +2,7 @@
 // Copyright (c) 2019 Seán D. Murray
 // SEE MIT LICENSE FILE
 const crypto = require('crypto');
+const is = require('prose_is');
 const isit = require('prose_isit');
 const array_util = require('prose_array');
 const string_util = require('prose_string');
@@ -31,7 +32,7 @@ exports.copy = (obj, orderItems = false) => {
 };
 
 exports.isEmpty = (obj) => {
-	if (isit.nil(obj)) {
+	if (is.nil(obj)) {
 		return true;
 	}
 	if (isit.notObject(obj)) {
@@ -45,10 +46,10 @@ exports.notEmpty = (obj) => {
 };
 
 exports.equal = (obj1, obj2, orderItems = true) => {
-	if (isit.notDefined(obj1) && isit.notDefined(obj1)) {
+	if (is.notDefined(obj1) && is.notDefined(obj2)) {
 		return true;
 	}
-	if (isit.nil(obj1) && isit.nil(obj1)) {
+	if (is.allNull(obj1, obj2)) {
 		return true;
 	}
 	let hash1 = exports.toHash(obj1, orderItems);
@@ -57,10 +58,10 @@ exports.equal = (obj1, obj2, orderItems = true) => {
 };
 
 exports.has = (obj, key) => {
-	if (isit.notObject(obj) || isit.nil(key)) {
+	if (isit.notObject(obj) || is.nil(key)) {
 		return false;
 	}
-	if (isit.notNil(obj[key])) {
+	if (is.notNil(obj[key])) {
 		return true;
 	}
 	return false;
@@ -71,7 +72,7 @@ exports.notHave = (obj, key) => {
 };
 
 exports.toHash = (obj, orderItems = true) => {
-	if (isit.nil(obj)) {
+	if (is.nil(obj)) {
 		return '0';
 	}
 	let deterministicCopy = exports.copy(obj, orderItems);

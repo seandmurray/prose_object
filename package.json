@@ -1,6 +1,6 @@
 {
   "name": "prose_object",
-  "version": "1.0.12",
+  "version": "2.0.4",
   "description": "An object Utility. Make writing node easier, prettier and less error prone. Writes and reads more like prose",
   "license": "MIT",
   "main": "index.js",
@@ -8,7 +8,6 @@
     "object",
     "core",
     "easy",
-    "lodash",
     "pretty",
     "prose",
     "short",
@@ -27,6 +26,7 @@
   },
   "dependencies": {
     "prose_array": "*",
+    "prose_is": "*",
     "prose_isit": "*",
     "prose_string": "*"
   },
