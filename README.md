@@ -1,6 +1,6 @@
 # prose_object
 
-Copyright (c) 2019 Seán D. Murray
+Copyright (c) 2020 Seán D. Murray
 SEE MIT LICENSE FILE
 
 An object Utility. Make writing node easier, prettier and less error prone. Writes and reads more like prose.
