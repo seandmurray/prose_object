@@ -1,18 +1,19 @@
 {
   "name": "prose_object",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "An object Utility. Make writing node easier, prettier and less error prone. Writes and reads more like prose",
   "license": "MIT",
   "main": "index.js",
   "keywords": [
-    "object",
     "core",
     "easy",
+    "object",
     "pretty",
     "prose",
     "short",
     "simple",
-    "style"
+    "style",
+    "utility"
   ],
   "authors": [
     "Sean D. Murray"

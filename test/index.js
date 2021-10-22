@@ -2,18 +2,37 @@ const assert = require('assert');
 const TestObj = require('../index');
 
 const testArray = [1, 2, 3, 4];
-const testFunction = () => {};
+const testFunction = () => { };
 const testNum = 123;
 const testString = 'avalue';
 
 let tmp1;
-let orderedObj = { a: [
+const orderedObj = {
+  a: [
     [8, 9], { c: 'd', q: [2, 5, 6], z: 'w' }, 'b', 'e'
-  ], c: 1, d: undefined, e: null, f: true, g: { one: 'two', z: [2, 5, 'w', 'y'] } };
-let unorderedObj = { c: 1, d: undefined, e: null, g: { z: ['y', 5, 'w', 2], 'one': 'two' }, f: true, a: ['b', { z: 'w', c: 'd', q: [5, 6, 2] },
+  ], c: 1, d: undefined, e: null, f: true, g: { one: 'two', z: [2, 5, 'w', 'y'] }
+};
+const unorderedObj = {
+  c: 1, d: undefined, e: null, g: { z: ['y', 5, 'w', 2], 'one': 'two' }, f: true, a: ['b', { z: 'w', c: 'd', q: [5, 6, 2] },
     [9, 8], 'e'
-  ] };
+  ]
+};
+
+const flattenedObj = {
+  "a:0:0": 8, "a:0:1": 9, "a:1.c": "d", "a:1.q:0": 2, "a:1.q:1": 5, "a:1.q:2": 6,
+  "a:1.z": "w", "a:2": "b", "a:3": "e", "c": 1, "e": null, "f": true, "g.one": "two",
+  "g.z:0": 2, "g.z:1": 5, "g.z:2": "w", "g.z:3": "y"
+}
+
+
 let orderedObjHash = 'ae0e3ec0bdd24c02862d3fee2a7dd1094a98f592e950b759d3f1007936b7c503db0934ac2951b145a1b5a065d9a45b2d0ae42d934a7a4af4788193bff7e47444';
+
+// Flatten
+tmp1 = TestObj.flatten(orderedObj);
+assert.equal(tmp1['a:0:0'] === 8, true, 'Flattened object worked!');
+assert.equal(tmp1['g.z:3'] === 'y', true, 'Flattened object worked!');
+assert.equal(TestObj.equal(tmp1, flattenedObj), true, 'Flattened object worked!');
+console.log('Flatten testing success');
 
 // Copy
 tmp1 = TestObj.copy(orderedObj);
@@ -60,9 +79,11 @@ assert.equal(TestObj.equal(orderedObj, TestObj.copy(orderedObj)), true, 'Two ide
 assert.equal(TestObj.equal(orderedObj, TestObj.copy(orderedObj), false), true, 'Two identical object should be the same, without ordering');
 assert.equal(TestObj.equal(orderedObj, TestObj.copy(unorderedObj)), true, 'Different only in the order of items, objects should be the same');
 assert.equal(TestObj.equal(orderedObj, TestObj.copy(unorderedObj), false), false, 'Different only in the order of items, objects should be different without ordering');
-tmp1 = { c: 1, d: undefined, e: null, g: { z: ['y', 5, ], 'one': 'two' }, f: true, a: ['b', { z: 'w', c: 'd', q: [5, 6, 2] },
+tmp1 = {
+  c: 1, d: undefined, e: null, g: { z: ['y', 5,], 'one': 'two' }, f: true, a: ['b', { z: 'w', c: 'd', q: [5, 6, 2] },
     [9, 8], 'e'
-  ] };
+  ]
+};
 assert.equal(TestObj.equal(orderedObj, tmp1), false, 'Even a deep differnce should fail the comparison');
 console.log('Equal testing success');
 

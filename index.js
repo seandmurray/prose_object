@@ -1,14 +1,45 @@
 /* jshint esversion: 6 */
-// Copyright (c) 2020 Seán D. Murray
+// Copyright (c) 2021 Seán D. Murray
 // SEE MIT LICENSE FILE
 const crypto = require('crypto');
 const is = require('prose_is');
 const isit = require('prose_isit');
 const array_util = require('prose_array');
 const string_util = require('prose_string');
+const { sep } = require('path');
 
 const HASH_GENERATOR = 'sha512';
 const HASH_ENCODING = 'hex';
+
+// TODO make an unflatten
+exports.flatten = (obj, objSeparator = ".", arraySeparator = ':') => {
+	const result = {};
+	function recurse(current, property) {
+		if (isit.aPrimitive(current)) {
+			result[property] = current;
+		} else if (isit.anArray(current)) {
+			for (let i = 0; i < current.length; i += 1) {
+				const tmp = property ? `${property}${arraySeparator}${i}` : `${i}`;
+				recurse(current[i], tmp);
+			}
+			if (current.length === 0) {
+				result[property] = [];
+			}
+		} else {
+			let isEmpty = true;
+			Object.keys(current).forEach((key) => {
+				isEmpty = false;
+				const tmp = property ? `${property}${objSeparator}${key}` : `${key}`;
+				recurse(current[key], tmp);
+			});
+			if (isEmpty) {
+				result[property] = {};
+			}
+		}
+	}
+	recurse(obj, "");
+	return result;
+};
 
 exports.copy = (obj, orderItems = false) => {
 	if (isit.aPrimitive(obj)) {
